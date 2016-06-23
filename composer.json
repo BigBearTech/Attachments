@@ -1,0 +1,19 @@
+{
+    "name": "bigbeartech/attachments",
+    "description": "A simple package for uploading media to Laravel",
+    "keywords": ["upload", "laravel", "package"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "intervention/image": "^2.3"
+    },
+    "require-dev": {
+        "mockery/mockery": "^0.9.5",
+        "phpunit/phpunit": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "BigBearTech\\Attachments\\": "src/"
+        }
+    }
+}
