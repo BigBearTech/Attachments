@@ -1,21 +1,23 @@
 <?php
 
-namespace App\Classes;
+namespace BigBearTech\Attachments;
 
 use Illuminate\Support\Facades\Storage;
 
 use Carbon\Carbon;
 use Intervention\Image\ImageManagerStatic as Image;
 
-/**
-*
-*/
-class Media
+use BigBearTech\Attachments\Models\AttachmentModel;
+
+class Attachment
 {
 	private function createStorageMedia()
 	{
 		$now = Carbon::now();
-		Storage::disk('media')->makeDirectory($now->year . DIRECTORY_SEPARATOR . $now->month);
+		$dir = storage_path('media' . DIRECTORY_SEPARATOR . $now->year . DIRECTORY_SEPARATOR . $now->month);
+		if(!file_exists($dir)) {
+			mkdir($dir, 0777, true);
+		}
 	}
 
 	public function upload($file, $db=true)
@@ -52,8 +54,10 @@ class Media
         // Save image to db
         if($db)
         {
-        	$attachment = new Attachment;
-        	$attachment->user_id = auth()->user()->id;
+        	$attachment = new AttachmentModel;
+			if(auth()->check()) {
+	        	$attachment->user_id = auth()->user()->id;
+			}
         	$attachment->path = 'media' . DIRECTORY_SEPARATOR . $now->year . DIRECTORY_SEPARATOR . $now->month . DIRECTORY_SEPARATOR . $fileName;
         	$attachment->title = $fileNameWithoutExtension;
         	$attachment->file_name = $fileName;
