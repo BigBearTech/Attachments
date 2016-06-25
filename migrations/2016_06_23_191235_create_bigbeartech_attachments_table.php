@@ -12,7 +12,7 @@ class CreateBigbeartechAttachmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bigbeartech_attachments', function (Blueprint $table) {
+        Schema::create(config('attachments.table'), function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->default(0);
             $table->string('title')->nullable();
@@ -43,6 +43,6 @@ class CreateBigbeartechAttachmentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('bigbeartech_attachments');
+        Schema::drop(config('attachments.table'));
     }
 }
