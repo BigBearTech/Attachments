@@ -15,4 +15,9 @@ class AttachmentModel extends Model
     protected $casts = [
         'exif' => 'array',
     ];
+
+    public function __construct()
+    {
+        $this->table = config('attachments.table');
+    }
 }

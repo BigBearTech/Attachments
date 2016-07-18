@@ -20,7 +20,7 @@ class Attachment
 		}
 	}
 
-	public function upload($file, $db=true)
+	public function upload($file, $request, $db=true)
 	{
 		// Get the vars
 		$now = Carbon::now();
@@ -57,6 +57,11 @@ class Attachment
         	$attachment = new AttachmentModel;
 			if(auth()->check()) {
 	        	$attachment->user_id = auth()->user()->id;
+			}
+			if(is_array(config('attachments.fields'))) {
+				foreach(config('attachments.fields') as $val) {
+					$attachment->{$val} = $request->input($val);
+				}
 			}
         	$attachment->path = 'media' . DIRECTORY_SEPARATOR . $now->year . DIRECTORY_SEPARATOR . $now->month . DIRECTORY_SEPARATOR . $fileName;
         	$attachment->title = $fileNameWithoutExtension;

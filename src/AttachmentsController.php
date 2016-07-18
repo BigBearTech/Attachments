@@ -19,7 +19,7 @@ class AttachmentsController extends Controller
     {
         $file = $request->file('file');
 
-		$fileUploaded = $attachment->upload($file);
+		$fileUploaded = $attachment->upload($file, $request);
 
 		return response()->json(['success' => true, 'file' => $fileUploaded]);
     }
